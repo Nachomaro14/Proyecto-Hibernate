@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://80.59.2.251:3306/dam26_dbtest?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.username">dam26</property>
+    <property name="hibernate.connection.password">Mazuecos14</property>
+    <mapping resource="hibernate/Asignaturas.hbm.xml"/>
+    <mapping resource="hibernate/Alumnos.hbm.xml"/>
+    <mapping resource="hibernate/Profesores.hbm.xml"/>
+    <mapping resource="hibernate/Paa.hbm.xml"/>
+    <mapping resource="hibernate/AsigMat.hbm.xml"/>
+    <mapping resource="hibernate/Aulas.hbm.xml"/>
+    <mapping resource="hibernate/Matriculas.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>

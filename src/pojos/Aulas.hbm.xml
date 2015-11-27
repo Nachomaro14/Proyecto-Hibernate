@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 27-nov-2015 21:33:46 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="dam26_dbtest" name="pojos.Aulas" optimistic-lock="version" table="Aulas">
+    <composite-id class="pojos.AulasId" name="id">
+      <key-property name="nombreEdificio" type="string">
+        <column length="50" name="NombreEdificio"/>
+      </key-property>
+      <key-property name="numAula" type="int">
+        <column name="NumAula"/>
+      </key-property>
+    </composite-id>
+  </class>
+</hibernate-mapping>

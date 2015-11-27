@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-catalog="dam26_dbtest"/>
+  <table-filter match-name="AsigMat"/>
+  <table-filter match-name="Matriculas"/>
+  <table-filter match-name="Aulas"/>
+  <table-filter match-name="PAA"/>
+  <table-filter match-name="Asignaturas"/>
+  <table-filter match-name="Profesores"/>
+  <table-filter match-name="Alumnos"/>
+</hibernate-reverse-engineering>
