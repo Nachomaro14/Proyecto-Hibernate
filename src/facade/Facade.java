@@ -1,5 +1,5 @@
 package facade;
 
-public class Facade {
+public class Facade implements IFacade{
     
 }
