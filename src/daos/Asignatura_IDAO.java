@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import javax.swing.table.TableModel;
 import org.hibernate.Session;
 import pojos.Asignaturas;
-import pojos.AsignaturasId;
 
 public interface Asignatura_IDAO {
     
@@ -18,7 +17,7 @@ public interface Asignatura_IDAO {
     
     public void eliminarAsignatura(Asignaturas a);
     
-    public Asignaturas getAsignaturas(int codigo, String dni);
+    public Asignaturas getAsignatura(int codigo, String dni);
     
     public ArrayList<Asignaturas> getAsignaturas();
     

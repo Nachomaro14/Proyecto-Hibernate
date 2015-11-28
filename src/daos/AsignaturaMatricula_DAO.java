@@ -7,7 +7,6 @@ import javax.swing.table.TableModel;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import pojos.Alumnos;
 import pojos.AsigMat;
 import pojos.NewHibernateUtil;
 
@@ -99,7 +98,7 @@ public class AsignaturaMatricula_DAO implements AsignaturaMatricula_IDAO{
     public TableModel tablaAsigMat(ArrayList<AsigMat> asignaturas) {
         DefaultTableModel tablemodel = new DefaultTableModel();
         String[] columNames = {"Código","DNI","Título","Créditos","Nota"};
-        Object[][] data = new String[asignaturas.size()][5];
+        Object[][] data = new Object[asignaturas.size()][5];
         for(int i = 0; i < asignaturas.size(); i++){
             data[i][0] = asignaturas.get(i).getCodigo();
             data[i][1] = asignaturas.get(i).getDni();

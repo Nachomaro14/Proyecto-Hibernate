@@ -7,9 +7,7 @@ import javax.swing.table.TableModel;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import pojos.AsigMat;
 import pojos.Asignaturas;
-import pojos.AsignaturasId;
 import pojos.NewHibernateUtil;
 
 public class Asignatura_DAO implements Asignatura_IDAO{
@@ -45,7 +43,7 @@ public class Asignatura_DAO implements Asignatura_IDAO{
         closeSession();
     }
     
-    public Asignaturas getAsignaturas(int codigo, String titulo) {
+    public Asignaturas getAsignatura(int codigo, String titulo) {
         Asignaturas asignatura = new Asignaturas();
         ArrayList<Asignaturas> asignaturas = new ArrayList<>();
         String q = "FROM Asignaturas WHERE id.getCodigo() = "+ codigo +" AND id.getTitulo() = '"+ titulo +"'";
@@ -86,7 +84,7 @@ public class Asignatura_DAO implements Asignatura_IDAO{
     public TableModel tablaAsignaturas(ArrayList<Asignaturas> asignaturas) {
         DefaultTableModel tablemodel = new DefaultTableModel();
         String[] columNames = {"Código","Título","Créditos"};
-        Object[][] data = new String[asignaturas.size()][3];
+        Object[][] data = new Object[asignaturas.size()][3];
         for(int i = 0; i < asignaturas.size(); i++){
             data[i][0] = asignaturas.get(i).getId().getCodigo();
             data[i][1] = asignaturas.get(i).getId().getTitulo();
