@@ -18,6 +18,8 @@ public interface Asignatura_IDAO {
     
     public void eliminarAsignatura(Asignaturas a);
     
+    public Asignaturas getAsignaturas(int codigo, String dni);
+    
     public ArrayList<Asignaturas> getAsignaturas();
     
     public TableModel tablaAsignaturas(ArrayList<Asignaturas> asignaturas);

@@ -44,6 +44,26 @@ public class Asignatura_DAO implements Asignatura_IDAO{
         tx.commit();
         closeSession();
     }
+    
+    public Asignaturas getAsignaturas(int codigo, String titulo) {
+        Asignaturas asignatura = new Asignaturas();
+        ArrayList<Asignaturas> asignaturas = new ArrayList<>();
+        String q = "FROM Asignaturas WHERE id.getCodigo() = "+ codigo +" AND id.getTitulo() = '"+ titulo +"'";
+        try {
+            Query query = getSession().createQuery(q);
+            asignaturas = (ArrayList<Asignaturas>) query.list();
+            asignatura = asignaturas.get(0);
+            return asignatura;
+        } catch (Exception e) {
+            if(tx != null){
+                tx.rollback();
+            }
+            e.printStackTrace();
+            return null;
+        } finally {
+            closeSession();
+        }
+    }
 
     public ArrayList<Asignaturas> getAsignaturas() {
         ArrayList<Asignaturas> asignaturas = new ArrayList<>();
