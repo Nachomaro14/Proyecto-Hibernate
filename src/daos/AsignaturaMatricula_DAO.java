@@ -26,21 +26,42 @@ public class AsignaturaMatricula_DAO implements AsignaturaMatricula_IDAO{
         s.close();
     }
 
-    public void nuevaAsignaturaMatriculada(String dni, String titulo, Integer numCreditos, Integer nota) {
-        AsigMat am = new AsigMat(dni, titulo, numCreditos, nota);
+    public void nuevaAsignaturaMatriculada(AsigMat am) {
         getSession().save(am);
         tx.commit();
         closeSession();
     }
 
-    public void modificarNota(int codigo, String dni, int nota) {
-        
+    public void modificarAsignaturaMatriculada(AsigMat am) {
+        getSession().saveOrUpdate(am);
+        tx.commit();
+        closeSession();
     }
 
     public AsigMat getAsignaturaByDni(String dni) {
         AsigMat asigMat = new AsigMat();
         ArrayList<AsigMat> asignaturas = new ArrayList<>();
         String q = "FROM AsigMat WHERE dni = '"+ dni +"'";
+        try {
+            Query query = getSession().createQuery(q);
+            asignaturas = (ArrayList<AsigMat>) query.list();
+            asigMat = asignaturas.get(0);
+            return asigMat;
+        } catch (Exception e) {
+            if(tx != null){
+                tx.rollback();
+            }
+            e.printStackTrace();
+            return null;
+        } finally {
+            closeSession();
+        }
+    }
+    
+    public AsigMat getAsignaturaMatriculada(String dni, int codigo) {
+        AsigMat asigMat = new AsigMat();
+        ArrayList<AsigMat> asignaturas = new ArrayList<>();
+        String q = "FROM AsigMat WHERE dni = '"+ dni +"' AND codigo = "+ codigo;
         try {
             Query query = getSession().createQuery(q);
             asignaturas = (ArrayList<AsigMat>) query.list();

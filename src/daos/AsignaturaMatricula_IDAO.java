@@ -11,11 +11,13 @@ public interface AsignaturaMatricula_IDAO {
     
     public void closeSession();
     
-    public void nuevaAsignaturaMatriculada(String dni, String titulo, Integer numCreditos, Integer nota);
+    public void nuevaAsignaturaMatriculada(AsigMat am);
     
-    public void modificarNota(int codigo, String dni, int nota);
+    public void modificarAsignaturaMatriculada(AsigMat am);
     
     public AsigMat getAsignaturaByDni(String dni);
+    
+    public AsigMat getAsignaturaMatriculada(String dni, int codigo);
     
     public ArrayList<AsigMat> getAsignaturasMatriculadas(String dni);
     
