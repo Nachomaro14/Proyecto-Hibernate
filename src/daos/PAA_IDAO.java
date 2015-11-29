@@ -17,5 +17,5 @@ public interface PAA_IDAO {
     
     public ArrayList<Paa> getPAA();
     
-    public TableModel tablaAulas(ArrayList<Paa> paa);
+    public TableModel tablaPaa(ArrayList<Paa> paa);
 }

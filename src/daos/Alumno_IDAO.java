@@ -11,7 +11,7 @@ public interface Alumno_IDAO {
     
     public void closeSession();
     
-    public void nuevoAlumno(String dni, String apellidos, String nombre, String domicilio, String telefono, String acceso);
+    public void nuevoAlumno(Alumnos a);
     
     public Alumnos getAlumnoByDni(String dni);
     

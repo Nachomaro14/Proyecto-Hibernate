@@ -25,15 +25,13 @@ public class Alumno_DAO implements Alumno_IDAO{
         s.close();
     }
 
-    public void nuevoAlumno(String dni, String apellidos, String nombre, String domicilio, String telefono, String acceso) {
-        Alumnos a = new Alumnos(dni, apellidos, nombre, domicilio, telefono, acceso);
+    public void nuevoAlumno(Alumnos a) {
         getSession().save(a);
         tx.commit();
         closeSession();
     }
     
-    public void eliminarAlumno(String dni){
-        Alumnos a = new Alumnos(dni);
+    public void eliminarAlumno(Alumnos a){
         getSession().delete(a);
         tx.commit();
         closeSession();

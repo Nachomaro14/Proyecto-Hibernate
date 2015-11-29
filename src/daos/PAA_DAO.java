@@ -55,7 +55,7 @@ public class PAA_DAO implements PAA_IDAO{
         }
     }
 
-    public TableModel tablaAulas(ArrayList<Paa> paa) {
+    public TableModel tablaPaa(ArrayList<Paa> paa) {
         DefaultTableModel tablemodel = new DefaultTableModel();
         String[] columNames = {"DNI","Apellidos","Nombre","Título","Edificio","Aula"};
         Object[][] data = new Object[paa.size()][6];
