@@ -15,6 +15,8 @@ public interface AsignaturaMatricula_IDAO {
     
     public void modificarAsignaturaMatriculada(AsigMat am);
     
+    public void eliminarAsignaturaMatriculada(AsigMat am);
+    
     public AsigMat getAsignaturaByDni(String dni);
     
     public AsigMat getAsignaturaMatriculada(String dni, int codigo);

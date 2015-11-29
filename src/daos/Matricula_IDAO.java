@@ -15,6 +15,8 @@ public interface Matricula_IDAO {
     
     public void eliminarMatricula(Matriculas m);
     
+    public Matriculas getMatriculaByDni(String dni);
+    
     public ArrayList<Matriculas> getMatriculas();
     
     public TableModel tablaMatriculas(ArrayList<Matriculas> matriculas);

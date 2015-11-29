@@ -26,6 +26,8 @@ public interface IFacade {
     
     public void modificarAsignaturaMatriculada(AsigMat am);
     
+    public void eliminarAsignaturaMatriculada(AsigMat am);
+    
     public AsigMat getAsignaturaByDni(String dni);
     
     public AsigMat getAsignaturaMatriculada(String dni, int codigo);
@@ -42,7 +44,11 @@ public interface IFacade {
     
     public Asignaturas getAsignatura(int codigo, String dni);
     
+    public Asignaturas getAsignaturaByTitulo(String titulo);
+    
     public ArrayList<Asignaturas> getAsignaturas();
+    
+    public ArrayList<String> nombresAsignaturas();
     
     public TableModel tablaAsignaturas(ArrayList<Asignaturas> asignaturas);
     
@@ -63,6 +69,8 @@ public interface IFacade {
     public void eliminarMatricula(Matriculas m);
     
     public ArrayList<Matriculas> getMatriculas();
+    
+    public Matriculas getMatriculaByDni(String dni);
     
     public TableModel tablaMatriculas(ArrayList<Matriculas> matriculas);
     

@@ -75,8 +75,8 @@ public class Controlador implements ActionListener, MouseListener{
           catch (InstantiationException ex){}
           catch (IllegalAccessException ex){}
         
-        this.vista.btnLetras.setActionCommand("btnLetras");
-        this.vista.btnLetras.addActionListener(this);
+        this.vista.btnAcceder.setActionCommand("btnLetras");
+        this.vista.btnAcceder.addActionListener(this);
         this.vista.btnCiencias.setActionCommand("btnCiencias");
         this.vista.btnCiencias.addActionListener(this);
         this.vista.btnSalirInicio.setActionCommand("btnSalirInicio");

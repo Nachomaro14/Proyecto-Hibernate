@@ -60,10 +60,20 @@ public class Facade implements IFacade{
         Asignatura_DAO asignatura = (Asignatura_DAO) factory.getObject("ASIGNATURA");
         return asignatura.getAsignatura(codigo, dni);
     }
+    
+    public Asignaturas getAsignaturaByTitulo(String titulo) {
+        Asignatura_DAO asignatura = (Asignatura_DAO) factory.getObject("ASIGNATURA");
+        return asignatura.getAsignaturaByTitulo(titulo);
+    }
 
     public ArrayList<Asignaturas> getAsignaturas() {
         Asignatura_DAO asignatura = (Asignatura_DAO) factory.getObject("ASIGNATURA");
         return asignatura.getAsignaturas();
+    }
+    
+    public ArrayList<String> nombresAsignaturas() {
+        Asignatura_DAO asignatura = (Asignatura_DAO) factory.getObject("ASIGNATURA");
+        return asignatura.nombresAsignaturas();
     }
 
     public TableModel tablaAsignaturas(ArrayList<Asignaturas> asignaturas) {
@@ -89,6 +99,11 @@ public class Facade implements IFacade{
     public ArrayList<Matriculas> getMatriculas() {
         Matricula_DAO matricula = (Matricula_DAO) factory.getObject("MATRICULA");
         return matricula.getMatriculas();
+    }
+    
+    public Matriculas getMatriculaByDni(String dni) {
+        Matricula_DAO matricula = (Matricula_DAO) factory.getObject("MATRICULA");
+        return matricula.getMatriculaByDni(dni);
     }
 
     public TableModel tablaMatriculas(ArrayList<Matriculas> matriculas) {
@@ -139,6 +154,11 @@ public class Facade implements IFacade{
     public void modificarAsignaturaMatriculada(AsigMat am) {
         AsignaturaMatricula_DAO asignatura = (AsignaturaMatricula_DAO) factory.getObject("ASIGNATURAMATRICULA");
         asignatura.modificarAsignaturaMatriculada(am);
+    }
+    
+    public void eliminarAsignaturaMatriculada(AsigMat am) {
+        AsignaturaMatricula_DAO asignatura = (AsignaturaMatricula_DAO) factory.getObject("ASIGNATURAMATRICULA");
+        asignatura.eliminarAsignaturaMatriculada(am);
     }
 
     public void nuevaAsignatura(Asignaturas a) {

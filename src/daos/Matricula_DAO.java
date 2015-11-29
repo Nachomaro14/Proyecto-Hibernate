@@ -36,6 +36,26 @@ public class Matricula_DAO implements Matricula_IDAO{
         tx.commit();
         closeSession();
     }
+    
+    public Matriculas getMatriculaByDni(String dni){
+        Matriculas matricula = new Matriculas();
+        ArrayList<Matriculas> matriculas = new ArrayList<>();
+        String q = "FROM Matriculas WHERE dni = '"+ dni +"'";
+        try {
+            Query query = getSession().createQuery(q);
+            matriculas = (ArrayList<Matriculas>) query.list();
+            matricula = matriculas.get(0);
+            return matricula;
+        } catch (Exception e) {
+            if(tx != null){
+                tx.rollback();
+            }
+            e.printStackTrace();
+            return null;
+        } finally {
+            closeSession();
+        }
+    }
 
     public ArrayList<Matriculas> getMatriculas() {
         ArrayList<Matriculas> matriculas = new ArrayList<>();

@@ -109,4 +109,10 @@ public class AsignaturaMatricula_DAO implements AsignaturaMatricula_IDAO{
         tablemodel.setDataVector(data, columNames);
         return tablemodel;
     }
+
+    public void eliminarAsignaturaMatriculada(AsigMat am) {
+        getSession().delete(am);
+        tx.commit();
+        closeSession();
+    }
 }

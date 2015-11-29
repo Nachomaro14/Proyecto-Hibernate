@@ -17,9 +17,13 @@ public interface Asignatura_IDAO {
     
     public void eliminarAsignatura(Asignaturas a);
     
-    public Asignaturas getAsignatura(int codigo, String dni);
+    public Asignaturas getAsignatura(int codigo, String titulo);
+    
+    public Asignaturas getAsignaturaByTitulo(String titulo);
     
     public ArrayList<Asignaturas> getAsignaturas();
+    
+    public ArrayList<String> nombresAsignaturas();
     
     public TableModel tablaAsignaturas(ArrayList<Asignaturas> asignaturas);
 }

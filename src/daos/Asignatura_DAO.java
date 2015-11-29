@@ -7,6 +7,7 @@ import javax.swing.table.TableModel;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import pojos.Alumnos;
 import pojos.Asignaturas;
 import pojos.NewHibernateUtil;
 
@@ -80,6 +81,24 @@ public class Asignatura_DAO implements Asignatura_IDAO{
             closeSession();
         }
     }
+    
+    public ArrayList<String> nombresAsignaturas() {
+        ArrayList<String> asignaturas = new ArrayList<>();
+        String q = "SELECT Titulo FROM Asignaturas";
+        try {
+            Query query = getSession().createQuery(q);
+            asignaturas = (ArrayList<String>) query.list();
+            return asignaturas;
+        } catch (Exception e) {
+            if(tx != null){
+                tx.rollback();
+            }
+            e.printStackTrace();
+            return null;
+        } finally {
+            closeSession();
+        }
+    }
 
     public TableModel tablaAsignaturas(ArrayList<Asignaturas> asignaturas) {
         DefaultTableModel tablemodel = new DefaultTableModel();
@@ -92,5 +111,25 @@ public class Asignatura_DAO implements Asignatura_IDAO{
         }
         tablemodel.setDataVector(data, columNames);
         return tablemodel;
+    }
+
+    public Asignaturas getAsignaturaByTitulo(String titulo) {
+        Asignaturas asignatura = new Asignaturas();
+        ArrayList<Asignaturas> asignaturas = new ArrayList<>();
+        String q = "FROM Asignaturas WHERE titulo = '"+ titulo +"'";
+        try {
+            Query query = getSession().createQuery(q);
+            asignaturas = (ArrayList<Asignaturas>) query.list();
+            asignatura = asignaturas.get(0);
+            return asignatura;
+        } catch (Exception e) {
+            if(tx != null){
+                tx.rollback();
+            }
+            e.printStackTrace();
+            return null;
+        } finally {
+            closeSession();
+        }
     }
 }
