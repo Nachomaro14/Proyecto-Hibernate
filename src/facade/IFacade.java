@@ -34,6 +34,8 @@ public interface IFacade {
     
     public ArrayList<AsigMat> getAsignaturasMatriculadas(String dni);
     
+    public ArrayList<AsigMat> getAsignaturasMatriculadas();
+    
     public TableModel tablaAsigMat(ArrayList<AsigMat> asignaturas);
     
     public void nuevaAsignatura(Asignaturas a);

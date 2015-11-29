@@ -115,4 +115,22 @@ public class AsignaturaMatricula_DAO implements AsignaturaMatricula_IDAO{
         tx.commit();
         closeSession();
     }
+
+    public ArrayList<AsigMat> getAsignaturasMatriculadas() {
+        ArrayList<AsigMat> asignaturas = new ArrayList<>();
+        String q = "FROM AsigMat";
+        try {
+            Query query = getSession().createQuery(q);
+            asignaturas = (ArrayList<AsigMat>) query.list();
+            return asignaturas;
+        } catch (Exception e) {
+            if(tx != null){
+                tx.rollback();
+            }
+            e.printStackTrace();
+            return null;
+        } finally {
+            closeSession();
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package mvc;
+package sqlite;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,7 +11,7 @@ public class ConexionSQLite{
     public ConexionSQLite(){
         try{
             Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection("jdbc:sqlite:ProyectoUniversidad.db3");
+            conn = DriverManager.getConnection("jdbc:sqlite:CopiaSeguridad.db3");
             System.out.println("Conexion SQLite realizada con exito.");
         }catch(SQLException ex){
             System.out.println("Conexion NO realizada con exito por error de SQL.");

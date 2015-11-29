@@ -14,9 +14,15 @@ import hibernate.AulasId;
 import hibernate.Matriculas;
 import hibernate.Paa;
 import hibernate.Profesores;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
+import sqlite.ConexionSQLite;
 
 public class Interfaz extends javax.swing.JFrame {
     Facade facade = new Facade();
+    ConexionSQLite sqlite = new ConexionSQLite();
 
     public Interfaz() {
         initComponents();
@@ -924,6 +930,11 @@ public class Interfaz extends javax.swing.JFrame {
         jMenu4.setText("Copia de Seguridad");
 
         jMenuItem1.setText("Realizar CS");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem1);
 
         jMenuItem2.setText("Visualizar CS");
@@ -1043,6 +1054,11 @@ public class Interfaz extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaAlumnosCS.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaAlumnosCSMouseClicked(evt);
+            }
+        });
         jScrollPane12.setViewportView(tablaAlumnosCS);
 
         jPanel17.add(jScrollPane12);
@@ -1624,6 +1640,7 @@ public class Interfaz extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         cs.setVisible(false);
         consultas.setVisible(true);
+        tablaAsignaturasCS.setModel(tablaAsignaturasMatriculadasCS(""));
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -1631,7 +1648,23 @@ public class Interfaz extends javax.swing.JFrame {
         cs.pack();
         cs.setLocationRelativeTo(null);
         cs.setVisible(true);
+        tablaAlumnosCS.setModel(tablaAlumnosCS());
+        tablaAsignaturasCS.setModel(tablaAsignaturasMatriculadasCS(""));
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        vaciaAlumnosCS();
+        vaciaAsignaturasMatriculadasCS();
+        actualizaAlumnosCS(facade.getAlumnos());
+        actualizaAsignaturasCS(facade.getAsignaturasMatriculadas());
+        JOptionPane.showMessageDialog(null, "Copia de seguridad realizada con éxito.");
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void tablaAlumnosCSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAlumnosCSMouseClicked
+        int alumno = tablaAlumnosCS.rowAtPoint(evt.getPoint());
+        String dni = String.valueOf(tablaAlumnosCS.getValueAt(alumno, 0));
+        tablaAsignaturasCS.setModel(tablaAsignaturasMatriculadasCS(dni));
+    }//GEN-LAST:event_tablaAlumnosCSMouseClicked
 
     public boolean compruebaAsignaturaYaSeleccionada(String asignatura){
         boolean res = false;
@@ -1694,6 +1727,151 @@ public class Interfaz extends javax.swing.JFrame {
                 i.setVisible(true);
             }
         });
+    }
+    
+    public class ModeloTablaNoEditable extends DefaultTableModel {
+
+        public boolean isCellEditable(int row, int column){  
+            return false;  
+        }
+    }
+    
+    public void vaciaAlumnosCS(){
+        String q = "DELETE FROM Alumnos";
+        try {
+            PreparedStatement pstm = sqlite.getConexion().prepareStatement(q);
+            pstm.execute();
+            pstm.close();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Error al vaciar la tabla de alumnos\n" + e.getMessage());
+        }
+    }
+    
+    public void vaciaAsignaturasMatriculadasCS(){
+        String q = "DELETE FROM AsigMat";
+        try {
+            PreparedStatement pstm = sqlite.getConexion().prepareStatement(q);
+            pstm.execute();
+            pstm.close();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Error al vaciar la tabla de asignaturas\n" + e.getMessage());
+        }
+    }
+    
+    public void actualizaAlumnosCS(ArrayList<Alumnos> alumnos){
+        for(int i = 0; i < alumnos.size(); i++){
+            Alumnos alumno = alumnos.get(i);
+            String dni = alumno.getDni();
+            String apellidos = alumno.getApellidos();
+            String nombre = alumno.getNombre();
+            String domicilio = alumno.getDomicilio();
+            String telefono = alumno.getTelefono();
+            String acceso = alumno.getAcceso();
+            String q = "INSERT INTO Alumnos (DNI, Apellidos, Nombre, Domicilio, Telefono, Acceso)"
+                    + "VALUES('"+dni+"','"+apellidos+"','"+nombre+"','"+domicilio+"','"+telefono+"','"+acceso+"')";
+            try {
+                PreparedStatement pstm = sqlite.getConexion().prepareStatement(q);
+                pstm.execute();
+                pstm.close();
+            }catch(SQLException e){
+                JOptionPane.showMessageDialog(null, "Error al introducir nuevo alumno\n" + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    public void actualizaAsignaturasCS(ArrayList<AsigMat> asignaturas){
+        for(int i = 0; i < asignaturas.size(); i++){
+            AsigMat asignatura = asignaturas.get(i);
+            String dni = asignatura.getDni();
+            String titulo = asignatura.getTitulo();
+            int creditos = asignatura.getNumCreditos();
+            int nota = asignatura.getNota();
+            String q = "INSERT INTO AsigMat (DNI, Titulo, NumCreditos, Nota)"
+                + "VALUES('"+dni+"','"+titulo+"',"+creditos+","+nota+")";
+            try {
+                PreparedStatement pstm = sqlite.getConexion().prepareStatement(q);
+                pstm.execute();
+                pstm.close();
+            }catch(SQLException e){
+                JOptionPane.showMessageDialog(null, "Error al introducir nuevo alumno\n" + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    public DefaultTableModel tablaAlumnosCS(){
+        DefaultTableModel tablemodel = new ModeloTablaNoEditable();
+        int registros = 0;
+        String[] columNames = {"DNI","Apellidos","Nombre","Domicilio","Teléfono","Acceso"};
+      
+        try{
+            PreparedStatement pstm = sqlite.getConexion().prepareStatement("SELECT count(DNI) as total FROM Alumnos");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Error al contar tuplas\n" + e.getMessage());
+        }
+        Object[][] data = new String[registros][6];
+        try{
+          
+            PreparedStatement pstm = sqlite.getConexion().prepareStatement("SELECT DNI, Apellidos, Nombre, Domicilio, Telefono, Acceso FROM Alumnos");
+            ResultSet res = pstm.executeQuery();
+            int i=0;
+            while(res.next()){
+                data[i][0] = res.getString("DNI");
+                data[i][1] = res.getString("Apellidos");
+                data[i][2] = res.getString("Nombre");
+                data[i][3] = res.getString("Domicilio");
+                data[i][4] = res.getString("Telefono");
+                data[i][5] = res.getString("Acceso");
+            i++;
+            }
+            res.close();
+            tablemodel.setDataVector(data, columNames);
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n" + e.getMessage());
+        }
+        return tablemodel;
+    }
+    
+    public DefaultTableModel tablaAsignaturasMatriculadasCS(String dni){
+        DefaultTableModel tablemodel = new ModeloTablaNoEditable();
+        int registros = 0;
+        String[] columNames = {"Código","DNI","Título","Créditos","Nota"};
+      
+        try{
+            PreparedStatement pstm = sqlite.getConexion().prepareStatement("SELECT count(Codigo) as total FROM AsigMat WHERE DNI = '" + dni + "'");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Error al contar tuplas\n" + e.getMessage());
+        }
+        Object[][] data = new Object[registros][5];
+        try{
+          
+            PreparedStatement pstm = sqlite.getConexion().prepareStatement("SELECT Codigo, DNI, Titulo, NumCreditos, Nota FROM AsigMat WHERE DNI = '" + dni + "'");
+            ResultSet res = pstm.executeQuery();
+            int i=0;
+            while(res.next()){
+                data[i][0] = res.getString("Codigo");
+                data[i][1] = res.getString("DNI");
+                data[i][2] = res.getString("Titulo");
+                data[i][3] = res.getInt("NumCreditos");
+                data[i][4] = res.getInt("Nota");
+            i++;
+            }
+            res.close();
+            tablemodel.setDataVector(data, columNames);
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Error al obtener datos\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return tablemodel;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

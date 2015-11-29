@@ -50,6 +50,11 @@ public class Facade implements IFacade{
         AsignaturaMatricula_DAO asignatura = (AsignaturaMatricula_DAO) factory.getObject("ASIGNATURAMATRICULA");
         return asignatura.getAsignaturasMatriculadas(dni);
     }
+    
+    public ArrayList<AsigMat> getAsignaturasMatriculadas() {
+        AsignaturaMatricula_DAO asignatura = (AsignaturaMatricula_DAO) factory.getObject("ASIGNATURAMATRICULA");
+        return asignatura.getAsignaturasMatriculadas();
+    }
 
     public TableModel tablaAsigMat(ArrayList<AsigMat> asignaturas) {
         AsignaturaMatricula_DAO asignatura = (AsignaturaMatricula_DAO) factory.getObject("ASIGNATURAMATRICULA");

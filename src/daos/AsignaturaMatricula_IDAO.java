@@ -23,5 +23,7 @@ public interface AsignaturaMatricula_IDAO {
     
     public ArrayList<AsigMat> getAsignaturasMatriculadas(String dni);
     
+    public ArrayList<AsigMat> getAsignaturasMatriculadas();
+    
     public TableModel tablaAsigMat(ArrayList<AsigMat> asignaturas);
 }
