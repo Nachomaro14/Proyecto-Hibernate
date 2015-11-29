@@ -120,5 +120,90 @@ public class Facade implements IFacade{
         Profesor_DAO profesor = (Profesor_DAO) factory.getObject("PROFESOR");
         return profesor.tablaProfesores(profesores);
     }
+
+    public void nuevoAlumno(Alumnos a) {
+        Alumno_DAO alumno = (Alumno_DAO) factory.getObject("ALUMNO");
+        alumno.nuevoAlumno(a);
+    }
+
+    public void eliminarAlumno(Alumnos a) {
+        Alumno_DAO alumno = (Alumno_DAO) factory.getObject("ALUMNO");
+        alumno.eliminarAlumno(a);
+    }
+
+    public void nuevaAsignaturaMatriculada(AsigMat am) {
+        AsignaturaMatricula_DAO asignatura = (AsignaturaMatricula_DAO) factory.getObject("ASIGNATURAMATRICULA");
+        asignatura.nuevaAsignaturaMatriculada(am);
+    }
+
+    public void modificarAsignaturaMatriculada(AsigMat am) {
+        AsignaturaMatricula_DAO asignatura = (AsignaturaMatricula_DAO) factory.getObject("ASIGNATURAMATRICULA");
+        asignatura.modificarAsignaturaMatriculada(am);
+    }
+
+    public void nuevaAsignatura(Asignaturas a) {
+        Asignatura_DAO asignatura = (Asignatura_DAO) factory.getObject("ASIGNATURA");
+        asignatura.nuevaAsignatura(a);
+    }
+
+    public void modificarAsignatura(Asignaturas a) {
+        Asignatura_DAO asignatura = (Asignatura_DAO) factory.getObject("ASIGNATURA");
+        asignatura.modificarAsignatura(a);
+    }
+
+    public void eliminarAsignatura(Asignaturas a) {
+        Asignatura_DAO asignatura = (Asignatura_DAO) factory.getObject("ASIGNATURA");
+        asignatura.eliminarAsignatura(a);
+    }
+
+    public void nuevoAula(Aulas a) {
+        Aula_DAO aula = (Aula_DAO) factory.getObject("AULA");
+        aula.nuevoAula(a);
+    }
+
+    public void modificarAula(Aulas a) {
+        Aula_DAO aula = (Aula_DAO) factory.getObject("AULA");
+        aula.modificarAula(a);
+    }
+
+    public void eliminarAula(Aulas a) {
+        Aula_DAO aula = (Aula_DAO) factory.getObject("AULA");
+        aula.eliminarAula(a);
+    }
+
+    public void nuevaMatricula(Matriculas m) {
+        Matricula_DAO matricula = (Matricula_DAO) factory.getObject("MATRICULA");
+        matricula.nuevaMatricula(m);
+    }
+
+    public void eliminarMatricula(Matriculas m) {
+        Matricula_DAO matricula = (Matricula_DAO) factory.getObject("MATRICULA");
+        matricula.eliminarMatricula(m);
+    }
+
+    public void nuevoPAA(Paa p) {
+        PAA_DAO paa = (PAA_DAO) factory.getObject("PAA");
+        paa.nuevoPAA(p);
+    }
+
+    public void eliminarPAA(Paa p) {
+        PAA_DAO paa = (PAA_DAO) factory.getObject("PAA");
+        paa.eliminarPAA(p);
+    }
+
+    public void nuevoProfesor(Profesores p) {
+        Profesor_DAO profesor = (Profesor_DAO) factory.getObject("PROFESOR");
+        profesor.nuevoProfesor(p);
+    }
+
+    public void modificarProfesor(Profesores p) {
+        Profesor_DAO profesor = (Profesor_DAO) factory.getObject("PROFESOR");
+        profesor.modificarProfesor(p);
+    }
+
+    public void eliminarProfesor(Profesores p) {
+        Profesor_DAO profesor = (Profesor_DAO) factory.getObject("PROFESOR");
+        profesor.eliminarProfesor(p);
+    }
     
 }
