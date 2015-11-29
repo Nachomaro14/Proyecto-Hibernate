@@ -2,13 +2,13 @@ package facade;
 
 import java.util.ArrayList;
 import javax.swing.table.TableModel;
-import pojos.Alumnos;
-import pojos.AsigMat;
-import pojos.Asignaturas;
-import pojos.Aulas;
-import pojos.Matriculas;
-import pojos.Paa;
-import pojos.Profesores;
+import hibernate.Alumnos;
+import hibernate.AsigMat;
+import hibernate.Asignaturas;
+import hibernate.Aulas;
+import hibernate.Matriculas;
+import hibernate.Paa;
+import hibernate.Profesores;
 
 public interface IFacade {
     
@@ -42,7 +42,7 @@ public interface IFacade {
             
     public void eliminarAsignatura(Asignaturas a);
     
-    public Asignaturas getAsignatura(int codigo, String dni);
+    public Asignaturas getAsignatura(int codigo, String titulo);
     
     public Asignaturas getAsignaturaByTitulo(String titulo);
     
@@ -62,6 +62,10 @@ public interface IFacade {
     
     public ArrayList<Aulas> getAulas();
     
+    public ArrayList<String> nombresEdificios();
+    
+    public ArrayList<Integer> numerosAulas(String edificio);
+    
     public TableModel tablaAulas(ArrayList<Aulas> aulas);
     
     public void nuevaMatricula(Matriculas m);
@@ -78,6 +82,10 @@ public interface IFacade {
     
     public void eliminarPAA(Paa p);
     
+    public Paa getPAAByCodigo(int codigo);
+    
+    public int getCodigoPAA(String dni, String titulo, String edificio, int aula);
+    
     public ArrayList<Paa> getPAA();
     
     public TableModel tablaPaa(ArrayList<Paa> paa);
@@ -90,7 +98,13 @@ public interface IFacade {
     
     public Profesores getProfesor(String dni);
     
+    public String getNombreProfesor(String dni);
+    
+    public String getApellidosProfesor(String dni);
+    
     public ArrayList<Profesores> getProfesores();
+    
+    public ArrayList<String> nombresProfesores();
     
     public TableModel tablaProfesores(ArrayList<Profesores> profesores);
 }

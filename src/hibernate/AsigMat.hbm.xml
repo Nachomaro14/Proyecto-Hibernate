@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 27-nov-2015 21:33:46 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class catalog="dam26_dbtest" name="pojos.AsigMat" optimistic-lock="version" table="AsigMat">
+  <class catalog="dam26_dbtest" name="hibernate.AsigMat" optimistic-lock="version" table="AsigMat">
     <id name="codigo" type="java.lang.Integer">
       <column name="Codigo"/>
       <generator class="identity"/>

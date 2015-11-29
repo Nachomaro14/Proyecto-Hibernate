@@ -385,11 +385,11 @@ public class Controlador implements ActionListener, MouseListener{
                 
                 
             case btnAnadirAsignatura:
-                if(vista.txtNuevoCodigoAsignatura.getText().equals("") || vista.txtTitulo.getText().equals("") || vista.txtNumCreditos.getText().equals("")){
+                if(vista.txtNuevoCodigoAsignatura.getText().equals("") || vista.txtNuevoTitulo.getText().equals("") || vista.txtNumCreditos.getText().equals("")){
                     JOptionPane.showMessageDialog(null, "Introduzca los datos necesarios para crear una nueva asignatura");
                 }else{
                     int codigo = Integer.parseInt(vista.txtNuevoCodigoAsignatura.getText());
-                    String titulo = vista.txtTitulo.getText();
+                    String titulo = vista.txtNuevoTitulo.getText();
                     int creditos = Integer.parseInt(vista.txtNumCreditos.getText());
                     if(ciencias == 1){
                         if(modeloSQLite.comprobarExistenciaAsignatura(codigo, titulo) == true){
@@ -398,7 +398,7 @@ public class Controlador implements ActionListener, MouseListener{
                             modeloSQLite.nuevaAsignatura(codigo, titulo, creditos);
                             vista.tablaAsignaturas.setModel(modeloSQLite.getTablaAsignaturas());
                             vista.txtNuevoCodigoAsignatura.setText("");
-                            vista.txtTitulo.setText("");
+                            vista.txtNuevoTitulo.setText("");
                             vista.txtNumCreditos.setText("");
                         }
                     }else if(letras == 1){
@@ -408,7 +408,7 @@ public class Controlador implements ActionListener, MouseListener{
                             modeloMySQL.nuevaAsignatura(codigo, titulo, creditos);
                             vista.tablaAsignaturas.setModel(modeloMySQL.getTablaAsignaturas());
                             vista.txtNuevoCodigoAsignatura.setText("");
-                            vista.txtTitulo.setText("");
+                            vista.txtNuevoTitulo.setText("");
                             vista.txtNumCreditos.setText("");
                         }
                     }
@@ -417,7 +417,7 @@ public class Controlador implements ActionListener, MouseListener{
             case btnModificarAsignatura:
                 int codigo = Integer.parseInt(vista.txtCodigo.getText());
                 int nCodigo = Integer.parseInt(vista.txtNuevoCodigoAsignatura.getText());
-                String titulo = vista.txtTitulo.getText();
+                String titulo = vista.txtNuevoTitulo.getText();
                 int creditos = Integer.parseInt(vista.txtNumCreditos.getText());
                 if(ciencias == 1){
                     if(modeloSQLite.comprobarExistenciaAsignatura(nCodigo, titulo) == true){
@@ -427,7 +427,7 @@ public class Controlador implements ActionListener, MouseListener{
                         vista.tablaAsignaturas.setModel(modeloSQLite.getTablaAsignaturas());
                         vista.txtCodigo.setText("");
                         vista.txtNuevoCodigoAsignatura.setText("");
-                        vista.txtTitulo.setText("");
+                        vista.txtNuevoTitulo.setText("");
                         vista.txtNumCreditos.setText("");
                     }
                 }else if(letras == 1){
@@ -440,13 +440,13 @@ public class Controlador implements ActionListener, MouseListener{
                 break;
             case btnEliminarAsignatura:
                 int codigoEA = Integer.parseInt(vista.txtCodigo.getText());
-                String tituloEA = vista.txtTitulo.getText();
+                String tituloEA = vista.txtNuevoTitulo.getText();
                 if(ciencias == 1){
                     modeloSQLite.eliminarAsignatura(codigoEA, tituloEA);
                     vista.tablaAsignaturas.setModel(modeloSQLite.getTablaAsignaturas());
                     vista.txtCodigo.setText("");
                     vista.txtNuevoCodigoAsignatura.setText("");
-                    vista.txtTitulo.setText("");
+                    vista.txtNuevoTitulo.setText("");
                     vista.txtNumCreditos.setText("");
                 }else if(letras == 1){
                     modeloMySQL.eliminarAsignatura(codigoEA, tituloEA);
@@ -801,7 +801,7 @@ public class Controlador implements ActionListener, MouseListener{
             if(asignatura > -1){
                 try{
                     vista.txtCodigo.setText(String.valueOf(vista.tablaAsignaturas.getValueAt(asignatura, 0)));
-                    vista.txtTitulo.setText(String.valueOf(vista.tablaAsignaturas.getValueAt(asignatura, 1)));
+                    vista.txtNuevoTitulo.setText(String.valueOf(vista.tablaAsignaturas.getValueAt(asignatura, 1)));
                     vista.txtNumCreditos.setText(String.valueOf(vista.tablaAsignaturas.getValueAt(asignatura, 2)));
                     asignatura = -1;
                 }catch(Exception ex){

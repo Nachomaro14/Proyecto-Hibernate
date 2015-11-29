@@ -1,4 +1,4 @@
-package pojos;
+package hibernate;
 // Generated 27-nov-2015 21:33:44 by Hibernate Tools 4.3.1
 
 

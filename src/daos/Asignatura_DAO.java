@@ -7,9 +7,9 @@ import javax.swing.table.TableModel;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import pojos.Alumnos;
-import pojos.Asignaturas;
-import pojos.NewHibernateUtil;
+import hibernate.Alumnos;
+import hibernate.Asignaturas;
+import hibernate.NewHibernateUtil;
 
 public class Asignatura_DAO implements Asignatura_IDAO{
     Session s;
@@ -84,7 +84,7 @@ public class Asignatura_DAO implements Asignatura_IDAO{
     
     public ArrayList<String> nombresAsignaturas() {
         ArrayList<String> asignaturas = new ArrayList<>();
-        String q = "SELECT Titulo FROM Asignaturas";
+        String q = "SELECT id.titulo FROM Asignaturas";
         try {
             Query query = getSession().createQuery(q);
             asignaturas = (ArrayList<String>) query.list();

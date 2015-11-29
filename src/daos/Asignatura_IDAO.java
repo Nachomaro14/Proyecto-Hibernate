@@ -3,7 +3,7 @@ package daos;
 import java.util.ArrayList;
 import javax.swing.table.TableModel;
 import org.hibernate.Session;
-import pojos.Asignaturas;
+import hibernate.Asignaturas;
 
 public interface Asignatura_IDAO {
     

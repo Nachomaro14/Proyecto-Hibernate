@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 27-nov-2015 21:33:46 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class catalog="dam26_dbtest" name="pojos.Profesores" optimistic-lock="version" table="Profesores">
+  <class catalog="dam26_dbtest" name="hibernate.Alumnos" optimistic-lock="version" table="Alumnos">
     <id name="dni" type="string">
       <column length="50" name="DNI"/>
       <generator class="assigned"/>
@@ -19,8 +19,8 @@
     <property name="telefono" type="string">
       <column length="50" name="Telefono"/>
     </property>
-    <property name="supervisor" type="string">
-      <column length="50" name="Supervisor"/>
+    <property name="acceso" type="string">
+      <column length="50" name="Acceso"/>
     </property>
   </class>
 </hibernate-mapping>

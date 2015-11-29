@@ -1,4 +1,4 @@
-package pojos;
+package hibernate;
 
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.SessionFactory;

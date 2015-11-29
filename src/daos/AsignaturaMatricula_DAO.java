@@ -7,8 +7,8 @@ import javax.swing.table.TableModel;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import pojos.AsigMat;
-import pojos.NewHibernateUtil;
+import hibernate.AsigMat;
+import hibernate.NewHibernateUtil;
 
 public class AsignaturaMatricula_DAO implements AsignaturaMatricula_IDAO{
     Session s;

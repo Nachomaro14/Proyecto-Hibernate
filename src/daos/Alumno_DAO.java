@@ -7,8 +7,8 @@ import javax.swing.table.TableModel;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import pojos.Alumnos;
-import pojos.NewHibernateUtil;
+import hibernate.Alumnos;
+import hibernate.NewHibernateUtil;
 
 public class Alumno_DAO implements Alumno_IDAO{
     Session s;

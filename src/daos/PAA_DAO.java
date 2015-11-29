@@ -7,8 +7,8 @@ import javax.swing.table.TableModel;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import pojos.NewHibernateUtil;
-import pojos.Paa;
+import hibernate.NewHibernateUtil;
+import hibernate.Paa;
 
 public class PAA_DAO implements PAA_IDAO{
     Session s;
@@ -69,6 +69,46 @@ public class PAA_DAO implements PAA_IDAO{
         }
         tablemodel.setDataVector(data, columNames);
         return tablemodel;
+    }
+
+    public Paa getPAAByCodigo(int codigo) {
+        Paa p = new Paa();
+        ArrayList<Paa> paa = new ArrayList<>();
+        String q = "FROM Paa WHERE codAsignacion = "+ codigo;
+        try {
+            Query query = getSession().createQuery(q);
+            paa = (ArrayList<Paa>) query.list();
+            p = paa.get(0);
+            return p;
+        } catch (Exception e) {
+            if(tx != null){
+                tx.rollback();
+            }
+            e.printStackTrace();
+            return null;
+        } finally {
+            closeSession();
+        }
+    }
+
+    public int getCodigoPAA(String dni, String titulo, String edificio, int aula) {
+        int codigo;
+        ArrayList<Integer> paa = new ArrayList<>();
+        String q = "SELECT codAsignacion FROM Paa WHERE dni = '"+ dni + "' AND titulo = '"+titulo+"' AND nombreEdificio = '"+edificio+"' AND numAula = "+aula;
+        try {
+            Query query = getSession().createQuery(q);
+            paa = (ArrayList<Integer>) query.list();
+            codigo = paa.get(0);
+            return codigo;
+        } catch (Exception e) {
+            if(tx != null){
+                tx.rollback();
+            }
+            e.printStackTrace();
+            return 0;
+        } finally {
+            closeSession();
+        }
     }
     
 }

@@ -7,8 +7,8 @@ import javax.swing.table.TableModel;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import pojos.Aulas;
-import pojos.NewHibernateUtil;
+import hibernate.Aulas;
+import hibernate.NewHibernateUtil;
 
 public class Aula_DAO implements Aula_IDAO{
     Session s;
@@ -70,6 +70,42 @@ public class Aula_DAO implements Aula_IDAO{
             Query query = getSession().createQuery(q);
             aulas = (ArrayList<Aulas>) query.list();
             return aulas;
+        } catch (Exception e) {
+            if(tx != null){
+                tx.rollback();
+            }
+            e.printStackTrace();
+            return null;
+        } finally {
+            closeSession();
+        }
+    }
+    
+    public ArrayList<String> nombresEdificios() {
+        ArrayList<String> edificios = new ArrayList<>();
+        String q = "SELECT id.nombreEdificio FROM Aulas";
+        try {
+            Query query = getSession().createQuery(q);
+            edificios = (ArrayList<String>) query.list();
+            return edificios;
+        } catch (Exception e) {
+            if(tx != null){
+                tx.rollback();
+            }
+            e.printStackTrace();
+            return null;
+        } finally {
+            closeSession();
+        }
+    }
+    
+    public ArrayList<Integer> numerosAulas(String edificio) {
+        ArrayList<Integer> numeros = new ArrayList<>();
+        String q = "SELECT id.numAula FROM Aulas WHERE id.nombreEdificio = '"+ edificio +"'";
+        try {
+            Query query = getSession().createQuery(q);
+            numeros = (ArrayList<Integer>) query.list();
+            return numeros;
         } catch (Exception e) {
             if(tx != null){
                 tx.rollback();

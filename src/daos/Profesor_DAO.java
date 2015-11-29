@@ -7,8 +7,8 @@ import javax.swing.table.TableModel;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import pojos.NewHibernateUtil;
-import pojos.Profesores;
+import hibernate.NewHibernateUtil;
+import hibernate.Profesores;
 
 public class Profesor_DAO implements Profesor_IDAO{
     Session s;
@@ -62,6 +62,46 @@ public class Profesor_DAO implements Profesor_IDAO{
             closeSession();
         }
     }
+    
+    public String getNombreProfesor(String dni) {
+        String nombre = "";
+        ArrayList<String> profesores = new ArrayList<>();
+        String q = "SELECT nombre FROM Profesores WHERE dni = '"+ dni +"'";
+        try {
+            Query query = getSession().createQuery(q);
+            profesores = (ArrayList<String>) query.list();
+            nombre = profesores.get(0);
+            return nombre;
+        } catch (Exception e) {
+            if(tx != null){
+                tx.rollback();
+            }
+            e.printStackTrace();
+            return null;
+        } finally {
+            closeSession();
+        }
+    }
+    
+    public String getApellidosProfesor(String dni) {
+        String apellidos = "";
+        ArrayList<String> profesores = new ArrayList<>();
+        String q = "SELECT apellidos FROM Profesores WHERE dni = '"+ dni +"'";
+        try {
+            Query query = getSession().createQuery(q);
+            profesores = (ArrayList<String>) query.list();
+            apellidos = profesores.get(0);
+            return apellidos;
+        } catch (Exception e) {
+            if(tx != null){
+                tx.rollback();
+            }
+            e.printStackTrace();
+            return null;
+        } finally {
+            closeSession();
+        }
+    }
 
     public ArrayList<Profesores> getProfesores() {
         ArrayList<Profesores> profesores = new ArrayList<>();
@@ -69,6 +109,24 @@ public class Profesor_DAO implements Profesor_IDAO{
         try {
             Query query = getSession().createQuery(q);
             profesores = (ArrayList<Profesores>) query.list();
+            return profesores;
+        } catch (Exception e) {
+            if(tx != null){
+                tx.rollback();
+            }
+            e.printStackTrace();
+            return null;
+        } finally {
+            closeSession();
+        }
+    }
+    
+    public ArrayList<String> nombresProfesores() {
+        ArrayList<String> profesores = new ArrayList<>();
+        String q = "SELECT dni FROM Profesores";
+        try {
+            Query query = getSession().createQuery(q);
+            profesores = (ArrayList<String>) query.list();
             return profesores;
         } catch (Exception e) {
             if(tx != null){

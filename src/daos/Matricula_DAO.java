@@ -7,8 +7,8 @@ import javax.swing.table.TableModel;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import pojos.Matriculas;
-import pojos.NewHibernateUtil;
+import hibernate.Matriculas;
+import hibernate.NewHibernateUtil;
 
 public class Matricula_DAO implements Matricula_IDAO{
     Session s;

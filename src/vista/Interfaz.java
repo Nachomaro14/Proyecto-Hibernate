@@ -5,10 +5,15 @@ import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import pojos.Alumnos;
-import pojos.AsigMat;
-import pojos.Asignaturas;
-import pojos.Matriculas;
+import hibernate.Alumnos;
+import hibernate.AsigMat;
+import hibernate.Asignaturas;
+import hibernate.AsignaturasId;
+import hibernate.Aulas;
+import hibernate.AulasId;
+import hibernate.Matriculas;
+import hibernate.Paa;
+import hibernate.Profesores;
 
 public class Interfaz extends javax.swing.JFrame {
     Facade facade = new Facade();
@@ -71,7 +76,7 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtTitulo = new javax.swing.JTextField();
+        txtNuevoTitulo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtNumCreditos = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
@@ -80,6 +85,8 @@ public class Interfaz extends javax.swing.JFrame {
         btnAnadirAsignatura = new javax.swing.JButton();
         jLabel25 = new javax.swing.JLabel();
         txtNuevoCodigoAsignatura = new javax.swing.JTextField();
+        jLabel29 = new javax.swing.JLabel();
+        txtTitulo = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaAsignaturas = new javax.swing.JTable();
         jSplitPane3 = new javax.swing.JSplitPane();
@@ -139,6 +146,9 @@ public class Interfaz extends javax.swing.JFrame {
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         btnVolver = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         nuevaMatricula = new javax.swing.JDialog();
         jPanel13 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
@@ -160,6 +170,14 @@ public class Interfaz extends javax.swing.JFrame {
         btnCompletarMatricula = new javax.swing.JButton();
         btnCancelarMatricula = new javax.swing.JButton();
         btnAnadirAsignaturaMatricula = new javax.swing.JButton();
+        cs = new javax.swing.JDialog();
+        jPanel17 = new javax.swing.JPanel();
+        jScrollPane12 = new javax.swing.JScrollPane();
+        tablaAlumnosCS = new javax.swing.JTable();
+        jScrollPane13 = new javax.swing.JScrollPane();
+        tablaAsignaturasCS = new javax.swing.JTable();
+        jPanel18 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         btnSalirInicio = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -443,19 +461,38 @@ public class Interfaz extends javax.swing.JFrame {
 
         txtCodigo.setEditable(false);
 
-        jLabel2.setText("Título");
+        jLabel2.setText("Nuevo Título");
 
         jLabel3.setText("Núm. Créditos");
 
         jLabel11.setText("<- ->");
 
         btnEliminarAsignatura.setText("Eliminar");
+        btnEliminarAsignatura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarAsignaturaActionPerformed(evt);
+            }
+        });
 
         btnModificarAsignatura.setText("Modificar");
+        btnModificarAsignatura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarAsignaturaActionPerformed(evt);
+            }
+        });
 
         btnAnadirAsignatura.setText("Añadir");
+        btnAnadirAsignatura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnadirAsignaturaActionPerformed(evt);
+            }
+        });
 
         jLabel25.setText("Nuevo Código");
+
+        jLabel29.setText("Título");
+
+        txtTitulo.setEditable(false);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -472,15 +509,17 @@ public class Interfaz extends javax.swing.JFrame {
                     .addComponent(btnModificarAsignatura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAnadirAsignatura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtNuevoCodigoAsignatura)
-                    .addComponent(txtTitulo)
+                    .addComponent(txtNuevoTitulo)
                     .addComponent(txtNumCreditos)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel25)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel29))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(txtTitulo))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -491,18 +530,22 @@ public class Interfaz extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel29)
+                .addGap(4, 4, 4)
+                .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel25)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNuevoCodigoAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtNuevoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNumCreditos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 238, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 189, Short.MAX_VALUE)
                 .addComponent(btnAnadirAsignatura)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnModificarAsignatura)
@@ -526,6 +569,11 @@ public class Interfaz extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaAsignaturas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaAsignaturasMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tablaAsignaturas);
 
         jSplitPane2.setRightComponent(jScrollPane3);
@@ -543,6 +591,11 @@ public class Interfaz extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaProfesores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaProfesoresMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(tablaProfesores);
 
         jSplitPane3.setRightComponent(jScrollPane4);
@@ -562,10 +615,25 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel13.setText("<- ->");
 
         btnAnadirProfesor.setText("Añadir");
+        btnAnadirProfesor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnadirProfesorActionPerformed(evt);
+            }
+        });
 
         btnModificarProfesor.setText("Modificar");
+        btnModificarProfesor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarProfesorActionPerformed(evt);
+            }
+        });
 
         btnEliminarProfesor.setText("Eliminar");
+        btnEliminarProfesor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarProfesorActionPerformed(evt);
+            }
+        });
 
         jLabel22.setText("DNI Supervisor");
 
@@ -660,10 +728,25 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel12.setText("<- ->");
 
         btnAnadirAula.setText("Añadir");
+        btnAnadirAula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnadirAulaActionPerformed(evt);
+            }
+        });
 
         btnModificarAula.setText("Modificar");
+        btnModificarAula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarAulaActionPerformed(evt);
+            }
+        });
 
         btnEliminarAula.setText("Eliminar");
+        btnEliminarAula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarAulaActionPerformed(evt);
+            }
+        });
 
         jLabel27.setText("Nuevo Edificio");
 
@@ -738,6 +821,11 @@ public class Interfaz extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaAulas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaAulasMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tablaAulas);
 
         jSplitPane4.setRightComponent(jScrollPane2);
@@ -757,6 +845,11 @@ public class Interfaz extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaAsignaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaAsignacionesMouseClicked(evt);
+            }
+        });
         jScrollPane9.setViewportView(tablaAsignaciones);
 
         jPanel8.add(jScrollPane9, java.awt.BorderLayout.CENTER);
@@ -770,6 +863,11 @@ public class Interfaz extends javax.swing.JFrame {
         jPanel10.add(comboAsignatura);
 
         comboEdificio.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboEdificio.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboEdificioItemStateChanged(evt);
+            }
+        });
         jPanel10.add(comboEdificio);
 
         comboAula.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -786,6 +884,11 @@ public class Interfaz extends javax.swing.JFrame {
         jPanel11.add(filler1);
 
         btnAsignar.setText("Asignar");
+        btnAsignar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAsignarActionPerformed(evt);
+            }
+        });
         jPanel11.add(btnAsignar);
         jPanel11.add(filler4);
 
@@ -794,6 +897,11 @@ public class Interfaz extends javax.swing.JFrame {
         jPanel11.add(filler3);
 
         btnEliminarAsignacion.setText("Eliminar");
+        btnEliminarAsignacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarAsignacionActionPerformed(evt);
+            }
+        });
         jPanel11.add(btnEliminarAsignacion);
         jPanel11.add(filler2);
 
@@ -812,6 +920,21 @@ public class Interfaz extends javax.swing.JFrame {
         jMenu3.add(btnVolver);
 
         jMenuBar2.add(jMenu3);
+
+        jMenu4.setText("Copia de Seguridad");
+
+        jMenuItem1.setText("Realizar CS");
+        jMenu4.add(jMenuItem1);
+
+        jMenuItem2.setText("Visualizar CS");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem2);
+
+        jMenuBar2.add(jMenu4);
 
         consultas.setJMenuBar(jMenuBar2);
 
@@ -865,11 +988,6 @@ public class Interfaz extends javax.swing.JFrame {
         comboAsignaturasAMatricular.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel13.add(comboAsignaturasAMatricular, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, -1, -1));
 
-        listaAsignaturasAMatricular.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane6.setViewportView(listaAsignaturasAMatricular);
 
         jPanel13.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 570, 160));
@@ -907,6 +1025,66 @@ public class Interfaz extends javax.swing.JFrame {
         nuevaMatriculaLayout.setVerticalGroup(
             nuevaMatriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
+        );
+
+        cs.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        cs.setResizable(false);
+
+        jPanel17.setLayout(new javax.swing.BoxLayout(jPanel17, javax.swing.BoxLayout.PAGE_AXIS));
+
+        tablaAlumnosCS.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane12.setViewportView(tablaAlumnosCS);
+
+        jPanel17.add(jScrollPane12);
+
+        tablaAsignaturasCS.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane13.setViewportView(tablaAsignaturasCS);
+
+        jPanel17.add(jScrollPane13);
+
+        jPanel18.setLayout(new java.awt.BorderLayout());
+
+        jButton1.setText("Volver");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel18.add(jButton1, java.awt.BorderLayout.CENTER);
+
+        javax.swing.GroupLayout csLayout = new javax.swing.GroupLayout(cs.getContentPane());
+        cs.getContentPane().setLayout(csLayout);
+        csLayout.setHorizontalGroup(
+            csLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, 630, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, 630, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        csLayout.setVerticalGroup(
+            csLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(csLayout.createSequentialGroup()
+                .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -951,7 +1129,7 @@ public class Interfaz extends javax.swing.JFrame {
 
     private void btnNuevaMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaMatriculaActionPerformed
         matriculas.setVisible(false);
-        ArrayList<String> asignaturas = new ArrayList<String>();
+        ArrayList<String> asignaturas = facade.nombresAsignaturas();
         int t = asignaturas.size();
         String[] nombres = new String[t];
         for(int i = 0; i < t; i++){
@@ -981,11 +1159,12 @@ public class Interfaz extends javax.swing.JFrame {
         matriculas.setLocationRelativeTo(null);
         matriculas.setVisible(true);
         tablaMatriculas.setModel(facade.tablaMatriculas(facade.getMatriculas()));
+        tablaAsigMat.setModel(facade.tablaAsigMat(facade.getAsignaturasMatriculadas("")));
     }//GEN-LAST:event_btnAccederActionPerformed
 
     private void tablaMatriculasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMatriculasMouseClicked
         int matricula = tablaMatriculas.rowAtPoint(evt.getPoint());
-        String dni = String.valueOf(tablaMatriculas.getValueAt(matricula, 0));
+        String dni = String.valueOf(tablaMatriculas.getValueAt(matricula, 1));
         tablaAsigMat.setModel(facade.tablaAsigMat(facade.getAsignaturasMatriculadas(dni)));
     }//GEN-LAST:event_tablaMatriculasMouseClicked
 
@@ -999,6 +1178,12 @@ public class Interfaz extends javax.swing.JFrame {
         tablaProfesores.setModel(facade.tablaProfesores(facade.getProfesores()));
         tablaAulas.setModel(facade.tablaAulas(facade.getAulas()));
         tablaAsignaciones.setModel(facade.tablaPaa(facade.getPAA()));
+        tablaAsigMatAlum.setModel(facade.tablaAsigMat(facade.getAsignaturasMatriculadas("")));
+        actualizarComboProfesor();
+        actualizarComboAsignatura();
+        actualizarComboEdificio();
+        String edificio = comboEdificio.getItemAt(0).toString();
+        actualizarComboAula(edificio);
     }//GEN-LAST:event_btnConsultasActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -1019,16 +1204,20 @@ public class Interfaz extends javax.swing.JFrame {
         txtNuevoTelefono.setText("");
         txtNuevoAcceso.setText("");
         matriculas.setVisible(true);
+        listaAsignaturasAMatricular.setModel(new DefaultListModel());
     }//GEN-LAST:event_btnCancelarMatriculaActionPerformed
 
     private void btnAnadirAsignaturaMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirAsignaturaMatriculaActionPerformed
-        String asignatura = "";
-        asignatura = comboAsignaturasAMatricular.getSelectedItem().toString();
-        if(asignatura.equals("")){
+        String asignatura = comboAsignaturasAMatricular.getSelectedItem().toString();
+        if(asignatura.equals("") || comboAsignaturasAMatricular.getSelectedItem() == null){
             JOptionPane.showMessageDialog(null, "Seleccione una asignatura a añadir.");
         }else if(compruebaAsignaturaYaSeleccionada(asignatura) == false){
-            DefaultListModel listaAAM = (DefaultListModel) listaAsignaturasAMatricular.getModel();
-            listaAAM.addElement((Object) asignatura);
+            DefaultListModel listaAAM = new DefaultListModel();
+            for(int i = 0; i < listaAsignaturasAMatricular.getModel().getSize(); i++){
+                String elemento = listaAsignaturasAMatricular.getModel().getElementAt(i).toString();
+                listaAAM.addElement(elemento);
+            }
+            listaAAM.addElement(asignatura);
             listaAsignaturasAMatricular.setModel(listaAAM);
         }else if(compruebaAsignaturaYaSeleccionada(asignatura) == true){
             JOptionPane.showMessageDialog(null, "La asignatura ya ha sido seleccionada.");
@@ -1089,6 +1278,7 @@ public class Interfaz extends javax.swing.JFrame {
         txtNuevoAcceso.setText("");
         matriculas.setVisible(true);
         tablaMatriculas.setModel(facade.tablaMatriculas(facade.getMatriculas()));
+        listaAsignaturasAMatricular.setModel(new DefaultListModel());
     }//GEN-LAST:event_btnCompletarMatriculaActionPerformed
 
     private void tablaAlumnosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAlumnosMouseClicked
@@ -1125,6 +1315,324 @@ public class Interfaz extends javax.swing.JFrame {
         tablaAsigMatAlum.setModel(facade.tablaAsigMat(facade.getAsignaturasMatriculadas("")));
     }//GEN-LAST:event_btnEliminarAlumnoActionPerformed
 
+    private void tablaAsignaturasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAsignaturasMouseClicked
+        int asignatura = tablaAsignaturas.rowAtPoint(evt.getPoint());
+        String codigo = String.valueOf(tablaAsignaturas.getValueAt(asignatura, 0));
+        String titulo = String.valueOf(tablaAsignaturas.getValueAt(asignatura, 1));
+        String creditos = String.valueOf(tablaAsignaturas.getValueAt(asignatura, 2));
+        txtCodigo.setText(codigo);
+        txtTitulo.setText(titulo);
+        txtNuevoCodigoAsignatura.setText(codigo);
+        txtNuevoTitulo.setText(titulo);
+        txtNumCreditos.setText(creditos);
+    }//GEN-LAST:event_tablaAsignaturasMouseClicked
+
+    private void btnAnadirAsignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirAsignaturaActionPerformed
+        String codigo = txtNuevoCodigoAsignatura.getText();
+        String titulo = txtNuevoTitulo.getText();
+        String creditos = txtNumCreditos.getText();
+        if(!codigo.equals("") || !titulo.equals("") || !creditos.equals("")){
+            boolean existe = false;
+            ArrayList<Asignaturas> asignaturas = facade.getAsignaturas();
+            for(int i = 0; i < asignaturas.size(); i++){
+                if(asignaturas.get(i).getId().getCodigo() == Integer.parseInt(codigo) || asignaturas.get(i).getId().getTitulo().equals(titulo)){
+                    existe = true;
+                }
+            }
+            if(existe == false){
+                Asignaturas asignatura = new Asignaturas();
+                AsignaturasId id = new AsignaturasId();
+                id.setCodigo(Integer.parseInt(codigo));
+                id.setTitulo(titulo);
+                asignatura.setId(id);
+                asignatura.setNumCreditos(Integer.parseInt(creditos));
+                facade.nuevaAsignatura(asignatura);
+            }else{
+                JOptionPane.showMessageDialog(null, "Ya existe una asignatura con esa identificación.");
+            }
+        }
+        tablaAsignaturas.setModel(facade.tablaAsignaturas(facade.getAsignaturas()));
+        actualizarComboAsignatura();
+    }//GEN-LAST:event_btnAnadirAsignaturaActionPerformed
+
+    private void btnModificarAsignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarAsignaturaActionPerformed
+        String codigo = txtCodigo.getText();
+        String titulo = txtTitulo.getText();
+        String nCodigo = txtNuevoCodigoAsignatura.getText();
+        String nTitulo = txtNuevoTitulo.getText();
+        String creditos = txtNumCreditos.getText();
+        if(!codigo.equals("") || !titulo.equals("")){
+            if(!nCodigo.equals("") || !nTitulo.equals("") || !creditos.equals("")){
+                Asignaturas asignatura = facade.getAsignatura(Integer.parseInt(codigo), titulo);
+                AsignaturasId id = asignatura.getId();
+                id.setCodigo(Integer.parseInt(nCodigo));
+                id.setTitulo(nTitulo);
+                asignatura.setId(id);
+                asignatura.setNumCreditos(Integer.parseInt(creditos));
+                facade.modificarAsignatura(asignatura);
+            }else{
+                JOptionPane.showMessageDialog(null, "Introduzca los nuevos valores.");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione una asignatura que modificar.");
+        }
+        tablaAsignaturas.setModel(facade.tablaAsignaturas(facade.getAsignaturas()));
+        actualizarComboAsignatura();
+    }//GEN-LAST:event_btnModificarAsignaturaActionPerformed
+
+    private void btnEliminarAsignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarAsignaturaActionPerformed
+        String codigo = txtCodigo.getText();
+        String titulo = txtTitulo.getText();
+        if(!codigo.equals("") || !titulo.equals("")){
+            Asignaturas asignatura = facade.getAsignatura(Integer.parseInt(codigo), titulo);
+            facade.eliminarAsignatura(asignatura);
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione una asignatura que eliminar.");
+        }
+        tablaAsignaturas.setModel(facade.tablaAsignaturas(facade.getAsignaturas()));
+        actualizarComboAsignatura();
+    }//GEN-LAST:event_btnEliminarAsignaturaActionPerformed
+
+    private void tablaProfesoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProfesoresMouseClicked
+        int profesor = tablaProfesores.rowAtPoint(evt.getPoint());
+        String dni = String.valueOf(tablaProfesores.getValueAt(profesor, 0));
+        String apellidos = String.valueOf(tablaProfesores.getValueAt(profesor, 1));
+        String nombre = String.valueOf(tablaProfesores.getValueAt(profesor, 2));
+        String domicilio = String.valueOf(tablaProfesores.getValueAt(profesor, 3));;
+        String telefono = String.valueOf(tablaProfesores.getValueAt(profesor, 4));;
+        String supervisor = String.valueOf(tablaProfesores.getValueAt(profesor, 5));;
+        txtDniProfesor.setText(dni);
+        txtNuevoDniProfesor.setText(dni);
+        txtApellidosProfesor.setText(apellidos);
+        txtNombreProfesor.setText(nombre);
+        txtDomicilioProfesor.setText(domicilio);
+        txtTelefonoProfesor.setText(telefono);
+        txtSupervisorProfesor.setText(supervisor);
+    }//GEN-LAST:event_tablaProfesoresMouseClicked
+
+    private void btnAnadirProfesorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirProfesorActionPerformed
+        String nDni = txtNuevoDniProfesor.getText();
+        String apellidos = txtApellidosProfesor.getText();
+        String nombre = txtNombreProfesor.getText();
+        String domicilio = txtDomicilioProfesor.getText();
+        String telefono = txtTelefonoProfesor.getText();
+        String supervisor = txtSupervisorProfesor.getText();
+        if(!nDni.equals("") || !apellidos.equals("") || !nombre.equals("") || !domicilio.equals("") || !telefono.equals("")){
+            if(!supervisor.equals("")){
+                ArrayList<Profesores> supervisores = facade.getProfesores();
+                boolean existe = false;
+                for(int i = 0; i < supervisores.size(); i++){
+                    if(supervisores.get(i).getDni().equals(supervisor)){
+                        existe = true;
+                    }
+                }
+                if(existe == true){
+                    Profesores profesor = new Profesores(nDni, apellidos, nombre, domicilio, telefono, supervisor);
+                    facade.nuevoProfesor(profesor);
+                }else{
+                    JOptionPane.showMessageDialog(null, "El supervisor introducido no existe.");
+                }
+            }else{
+                Profesores profesor = new Profesores(nDni, apellidos, nombre, domicilio, telefono, supervisor);
+                facade.nuevoProfesor(profesor);
+            }
+        }
+        tablaProfesores.setModel(facade.tablaProfesores(facade.getProfesores()));
+        actualizarComboProfesor();
+    }//GEN-LAST:event_btnAnadirProfesorActionPerformed
+
+    private void btnModificarProfesorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarProfesorActionPerformed
+        String dni = txtDniProfesor.getText();
+        String nDni = txtNuevoDniProfesor.getText();
+        String apellidos = txtApellidosProfesor.getText();
+        String nombre = txtNombreProfesor.getText();
+        String domicilio = txtDomicilioProfesor.getText();
+        String telefono = txtTelefonoProfesor.getText();
+        String supervisor = txtSupervisorProfesor.getText();
+        if(!dni.equals("")){
+            if(!nDni.equals("") || !apellidos.equals("") || !nombre.equals("") || !domicilio.equals("") || !telefono.equals("")){
+                Profesores profesor = facade.getProfesor(dni);
+                profesor.setDni(nDni);
+                profesor.setApellidos(apellidos);
+                profesor.setNombre(nombre);
+                profesor.setDomicilio(domicilio);
+                profesor.setTelefono(telefono);
+                profesor.setSupervisor(supervisor);
+                facade.modificarProfesor(profesor);
+            }else{
+                JOptionPane.showMessageDialog(null, "Introduzca todos los valores necesarios.");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione primero un profesor que modificar.");
+        }
+        tablaProfesores.setModel(facade.tablaProfesores(facade.getProfesores()));
+        actualizarComboProfesor();
+    }//GEN-LAST:event_btnModificarProfesorActionPerformed
+
+    private void btnEliminarProfesorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProfesorActionPerformed
+        String dni = txtDniProfesor.getText();
+        if(!dni.equals("")){
+            Profesores profesor = facade.getProfesor(dni);
+            facade.eliminarProfesor(profesor);
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione primero un profesor que eliminar.");
+        }
+        tablaProfesores.setModel(facade.tablaProfesores(facade.getProfesores()));
+        actualizarComboProfesor();
+    }//GEN-LAST:event_btnEliminarProfesorActionPerformed
+
+    private void tablaAulasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAulasMouseClicked
+        int aula = tablaAulas.rowAtPoint(evt.getPoint());
+        String edificio = String.valueOf(tablaAulas.getValueAt(aula, 0));
+        String numero = String.valueOf(tablaAulas.getValueAt(aula, 1));
+        txtEdificio.setText(edificio);
+        txtAula.setText(numero);
+        txtNuevoEdificio.setText(edificio);
+        txtNuevoNumero.setText(numero);
+    }//GEN-LAST:event_tablaAulasMouseClicked
+
+    private void btnAnadirAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirAulaActionPerformed
+        String edificio = txtNuevoEdificio.getText();
+        String numero = txtNuevoNumero.getText();
+        if(!edificio.equals("") || !numero.equals("")){
+            AulasId id = new AulasId(edificio, Integer.parseInt(numero));
+            Aulas aula = new Aulas(id);
+            facade.nuevoAula(aula);
+        }else{
+            JOptionPane.showMessageDialog(null, "Introduzca todos los valores necesarios.");
+        }
+        tablaAulas.setModel(facade.tablaAulas(facade.getAulas()));
+        actualizarComboEdificio();
+        String ed = comboEdificio.getItemAt(0).toString();
+        actualizarComboAula(ed);
+    }//GEN-LAST:event_btnAnadirAulaActionPerformed
+
+    private void btnModificarAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarAulaActionPerformed
+        String edificio = txtEdificio.getText();
+        String numero = txtAula.getText();
+        String nEdificio = txtNuevoEdificio.getText();
+        String nAula = txtNuevoNumero.getText();
+        if(!edificio.equals("") || !numero.equals("")){
+            if(!nEdificio.equals("") || !nAula.equals("")){
+                Aulas aula = facade.getAula(edificio, Integer.parseInt(numero));
+                AulasId id = aula.getId();
+                id.setNombreEdificio(nEdificio);
+                id.setNumAula(Integer.parseInt(nAula));
+                aula.setId(id);
+                facade.modificarAula(aula);
+            }else{
+                JOptionPane.showMessageDialog(null, "Introduzca todos los valores necesarios.");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione un aula que modificar.");
+        }
+        tablaAulas.setModel(facade.tablaAulas(facade.getAulas()));
+        actualizarComboEdificio();
+        String ed = comboEdificio.getItemAt(0).toString();
+        actualizarComboAula(ed);
+    }//GEN-LAST:event_btnModificarAulaActionPerformed
+
+    private void btnEliminarAulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarAulaActionPerformed
+        String edificio = txtEdificio.getText();
+        String numero = txtAula.getText();
+        if(!edificio.equals("") || !numero.equals("")){
+            Aulas aula = facade.getAula(edificio, Integer.parseInt(numero));
+            facade.eliminarAula(aula);
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione un aula que eliminar.");
+        }
+        tablaAulas.setModel(facade.tablaAulas(facade.getAulas()));
+        actualizarComboEdificio();
+        String ed = comboEdificio.getItemAt(0).toString();
+        actualizarComboAula(ed);
+    }//GEN-LAST:event_btnEliminarAulaActionPerformed
+
+    private void comboEdificioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboEdificioItemStateChanged
+        String edificio = comboEdificio.getSelectedItem().toString();
+        
+        ArrayList<Integer> aulas = facade.numerosAulas(edificio);
+        int t = aulas.size();
+        String[] numeros = new String[t];
+        for(int i = 0; i < t; i++){
+            numeros[i] = "" + aulas.get(i);
+        }
+        
+        comboAula.setModel(new DefaultComboBoxModel(numeros));
+    }//GEN-LAST:event_comboEdificioItemStateChanged
+
+    private void btnAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarActionPerformed
+        String dni = comboProfesor.getSelectedItem().toString();
+        String nombre = facade.getNombreProfesor(dni);
+        String apellidos = facade.getApellidosProfesor(dni);
+        String titulo = comboAsignatura.getSelectedItem().toString();
+        String edificio = comboEdificio.getSelectedItem().toString();
+        String aula = comboAula.getSelectedItem().toString();
+        ArrayList<Paa> asignaciones = facade.getPAA();
+        boolean existe = false;
+        for(int i = 0; i < asignaciones.size(); i++){
+            Paa asignacion = asignaciones.get(i);
+            if(asignacion.getDni().equals(dni) && asignacion.getTitulo().equals(titulo)){
+                existe = true;
+            }
+        }
+        if(existe == false){
+            int cont = 0;
+            for(int i = 0; i < asignaciones.size(); i++){
+                Paa asignacion = asignaciones.get(i);
+                if(asignacion.getDni().equals(dni)){
+                    cont++;
+                }
+            }
+            if(cont < 6){
+                Paa paa = new Paa();
+                paa.setDni(dni);
+                paa.setNombre(nombre);
+                paa.setApellidos(apellidos);
+                paa.setTitulo(titulo);
+                paa.setNombreEdificio(edificio);
+                paa.setNumAula(Integer.parseInt(aula));
+                facade.nuevoPAA(paa);
+            }else{
+                JOptionPane.showMessageDialog(null, "Ese profesor ya tiene asignada 6 asignaturas.");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Ese profesor ya tiene asignada esa asignatura.");
+        }
+        tablaAsignaciones.setModel(facade.tablaPaa(facade.getPAA()));
+    }//GEN-LAST:event_btnAsignarActionPerformed
+
+    private void btnEliminarAsignacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarAsignacionActionPerformed
+        String codigo = txtCodigoAsignacion.getText();
+        if(!codigo.equals("")){
+            Paa paa = facade.getPAAByCodigo(Integer.parseInt(codigo));
+            facade.eliminarPAA(paa);
+        }
+        tablaAsignaciones.setModel(facade.tablaPaa(facade.getPAA()));
+    }//GEN-LAST:event_btnEliminarAsignacionActionPerformed
+
+    private void tablaAsignacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAsignacionesMouseClicked
+        int paa = tablaAsignaciones.rowAtPoint(evt.getPoint());
+        String dni = String.valueOf(tablaAsignaciones.getValueAt(paa, 0));
+        String titulo = String.valueOf(tablaAsignaciones.getValueAt(paa, 3));
+        String edificio = String.valueOf(tablaAsignaciones.getValueAt(paa, 4));
+        String aula = String.valueOf(tablaAsignaciones.getValueAt(paa, 5));
+        int a = Integer.parseInt(aula);
+        int codigo = facade.getCodigoPAA(dni, titulo, edificio, a);
+        txtCodigoAsignacion.setText("" + codigo);
+    }//GEN-LAST:event_tablaAsignacionesMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        cs.setVisible(false);
+        consultas.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        consultas.setVisible(false);
+        cs.pack();
+        cs.setLocationRelativeTo(null);
+        cs.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     public boolean compruebaAsignaturaYaSeleccionada(String asignatura){
         boolean res = false;
         int n = listaAsignaturasAMatricular.getModel().getSize();
@@ -1136,10 +1644,54 @@ public class Interfaz extends javax.swing.JFrame {
         return res;
     }
     
+    public void actualizarComboProfesor(){
+        ArrayList<String> profesores = facade.nombresProfesores();
+        int t1 = profesores.size();
+        String[] dni = new String[t1];
+        for(int i = 0; i < t1; i++){
+            dni[i] = profesores.get(i);
+        }
+        comboProfesor.setModel(new DefaultComboBoxModel(dni));
+    }
+    
+    public void actualizarComboAsignatura(){
+        ArrayList<String> asignaturas = facade.nombresAsignaturas();
+        int t2 = asignaturas.size();
+        String[] codigos = new String[t2];
+        for(int i = 0; i < t2; i++){
+            codigos[i] = asignaturas.get(i);
+        }
+        comboAsignatura.setModel(new DefaultComboBoxModel(codigos));
+    }
+    
+    public void actualizarComboEdificio(){
+        ArrayList<String> edificios = facade.nombresEdificios();
+        int t3 = edificios.size();
+        String[] nombres = new String[t3];
+        for(int i = 0; i < t3; i++){
+            nombres[i] = edificios.get(i);
+        }
+        comboEdificio.setModel(new DefaultComboBoxModel(nombres));
+    }
+    
+    public void actualizarComboAula(String edificio){
+        ArrayList<Integer> aulas = facade.numerosAulas(edificio);
+        int t4 = aulas.size();
+        String[] numeros = new String[t4];
+        for(int i = 0; i < t4; i++){
+            numeros[i] = "" + aulas.get(i);
+        }
+        
+        comboAula.setModel(new DefaultComboBoxModel(numeros));
+    }
+    
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Interfaz().setVisible(true);
+                Interfaz i = new Interfaz();
+                i.pack();
+                i.setLocationRelativeTo(null);
+                i.setVisible(true);
             }
         });
     }
@@ -1179,10 +1731,12 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JComboBox comboEdificio;
     public javax.swing.JComboBox comboProfesor;
     public javax.swing.JDialog consultas;
+    private javax.swing.JDialog cs;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;
     private javax.swing.Box.Filler filler4;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1204,6 +1758,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1214,9 +1769,12 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JMenu jMenu1;
     public javax.swing.JMenu jMenu2;
     public javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -1225,6 +1783,8 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1236,6 +1796,8 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
+    private javax.swing.JScrollPane jScrollPane12;
+    private javax.swing.JScrollPane jScrollPane13;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -1254,11 +1816,13 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JDialog matriculas1;
     public javax.swing.JDialog nuevaMatricula;
     public javax.swing.JTable tablaAlumnos;
+    private javax.swing.JTable tablaAlumnosCS;
     public javax.swing.JTable tablaAsigMat;
     public javax.swing.JTable tablaAsigMat1;
     public javax.swing.JTable tablaAsigMatAlum;
     public javax.swing.JTable tablaAsignaciones;
     public javax.swing.JTable tablaAsignaturas;
+    private javax.swing.JTable tablaAsignaturasCS;
     public javax.swing.JTable tablaAulas;
     public javax.swing.JTable tablaMatriculas;
     public javax.swing.JTable tablaMatriculas1;
@@ -1283,6 +1847,7 @@ public class Interfaz extends javax.swing.JFrame {
     public javax.swing.JTextField txtNuevoNombre;
     public javax.swing.JTextField txtNuevoNumero;
     public javax.swing.JTextField txtNuevoTelefono;
+    public javax.swing.JTextField txtNuevoTitulo;
     public javax.swing.JTextField txtNumCreditos;
     public javax.swing.JTextField txtSupervisorProfesor;
     public javax.swing.JTextField txtTelefonoProfesor;

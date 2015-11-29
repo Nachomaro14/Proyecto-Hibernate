@@ -3,7 +3,7 @@ package daos;
 import java.util.ArrayList;
 import javax.swing.table.TableModel;
 import org.hibernate.Session;
-import pojos.Profesores;
+import hibernate.Profesores;
 
 public interface Profesor_IDAO {
     
@@ -19,7 +19,13 @@ public interface Profesor_IDAO {
     
     public Profesores getProfesor(String dni);
     
+    public String getNombreProfesor(String dni);
+    
+    public String getApellidosProfesor(String dni);
+    
     public ArrayList<Profesores> getProfesores();
+    
+    public ArrayList<String> nombresProfesores();
     
     public TableModel tablaProfesores(ArrayList<Profesores> profesores);
 }

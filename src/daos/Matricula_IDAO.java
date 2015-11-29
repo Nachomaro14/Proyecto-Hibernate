@@ -3,7 +3,7 @@ package daos;
 import java.util.ArrayList;
 import javax.swing.table.TableModel;
 import org.hibernate.Session;
-import pojos.Matriculas;
+import hibernate.Matriculas;
 
 public interface Matricula_IDAO {
     

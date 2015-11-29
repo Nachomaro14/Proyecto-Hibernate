@@ -10,13 +10,13 @@ import daos.Profesor_DAO;
 import factory.MyFactory;
 import java.util.ArrayList;
 import javax.swing.table.TableModel;
-import pojos.Alumnos;
-import pojos.AsigMat;
-import pojos.Asignaturas;
-import pojos.Aulas;
-import pojos.Matriculas;
-import pojos.Paa;
-import pojos.Profesores;
+import hibernate.Alumnos;
+import hibernate.AsigMat;
+import hibernate.Asignaturas;
+import hibernate.Aulas;
+import hibernate.Matriculas;
+import hibernate.Paa;
+import hibernate.Profesores;
 
 public class Facade implements IFacade{
     MyFactory factory = new MyFactory();
@@ -56,9 +56,9 @@ public class Facade implements IFacade{
         return asignatura.tablaAsigMat(asignaturas);
     }
 
-    public Asignaturas getAsignatura(int codigo, String dni) {
+    public Asignaturas getAsignatura(int codigo, String titulo) {
         Asignatura_DAO asignatura = (Asignatura_DAO) factory.getObject("ASIGNATURA");
-        return asignatura.getAsignatura(codigo, dni);
+        return asignatura.getAsignatura(codigo, titulo);
     }
     
     public Asignaturas getAsignaturaByTitulo(String titulo) {
@@ -89,6 +89,16 @@ public class Facade implements IFacade{
     public ArrayList<Aulas> getAulas() {
         Aula_DAO aula = (Aula_DAO) factory.getObject("AULA");
         return aula.getAulas();
+    }
+    
+    public ArrayList<String> nombresEdificios() {
+        Aula_DAO aula = (Aula_DAO) factory.getObject("AULA");
+        return aula.nombresEdificios();
+    }
+    
+    public ArrayList<Integer> numerosAulas(String edificio) {
+        Aula_DAO aula = (Aula_DAO) factory.getObject("AULA");
+        return aula.numerosAulas(edificio);
     }
 
     public TableModel tablaAulas(ArrayList<Aulas> aulas) {
@@ -125,10 +135,25 @@ public class Facade implements IFacade{
         Profesor_DAO profesor = (Profesor_DAO) factory.getObject("PROFESOR");
         return profesor.getProfesor(dni);
     }
+    
+    public String getNombreProfesor(String dni) {
+        Profesor_DAO profesor = (Profesor_DAO) factory.getObject("PROFESOR");
+        return profesor.getNombreProfesor(dni);
+    }
+    
+    public String getApellidosProfesor(String dni) {
+        Profesor_DAO profesor = (Profesor_DAO) factory.getObject("PROFESOR");
+        return profesor.getApellidosProfesor(dni);
+    }
 
     public ArrayList<Profesores> getProfesores() {
         Profesor_DAO profesor = (Profesor_DAO) factory.getObject("PROFESOR");
         return profesor.getProfesores();
+    }
+    
+    public ArrayList<String> nombresProfesores() {
+        Profesor_DAO profesor = (Profesor_DAO) factory.getObject("PROFESOR");
+        return profesor.nombresProfesores();
     }
 
     public TableModel tablaProfesores(ArrayList<Profesores> profesores) {
@@ -209,6 +234,16 @@ public class Facade implements IFacade{
     public void eliminarPAA(Paa p) {
         PAA_DAO paa = (PAA_DAO) factory.getObject("PAA");
         paa.eliminarPAA(p);
+    }
+    
+    public Paa getPAAByCodigo(int codigo) {
+        PAA_DAO paa = (PAA_DAO) factory.getObject("PAA");
+        return paa.getPAAByCodigo(codigo);
+    }
+    
+    public int getCodigoPAA(String dni, String titulo, String edificio, int aula) {
+        PAA_DAO paa = (PAA_DAO) factory.getObject("PAA");
+        return paa.getCodigoPAA(dni, titulo, edificio, aula);
     }
 
     public void nuevoProfesor(Profesores p) {

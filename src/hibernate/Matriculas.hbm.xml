@@ -2,9 +2,9 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 27-nov-2015 21:33:46 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class catalog="dam26_dbtest" name="pojos.Paa" optimistic-lock="version" table="PAA">
-    <id name="codAsignacion" type="java.lang.Integer">
-      <column name="CodAsignacion"/>
+  <class catalog="dam26_dbtest" name="hibernate.Matriculas" optimistic-lock="version" table="Matriculas">
+    <id name="codMat" type="java.lang.Integer">
+      <column name="CodMat"/>
       <generator class="identity"/>
     </id>
     <property name="dni" type="string">
@@ -16,14 +16,14 @@
     <property name="nombre" type="string">
       <column length="50" name="Nombre"/>
     </property>
-    <property name="titulo" type="string">
-      <column length="50" name="Titulo"/>
+    <property name="domicilio" type="string">
+      <column length="50" name="Domicilio"/>
     </property>
-    <property name="nombreEdificio" type="string">
-      <column length="50" name="NombreEdificio"/>
+    <property name="telefono" type="string">
+      <column length="50" name="Telefono"/>
     </property>
-    <property name="numAula" type="java.lang.Integer">
-      <column name="NumAula"/>
+    <property name="acceso" type="string">
+      <column length="50" name="Acceso"/>
     </property>
   </class>
 </hibernate-mapping>

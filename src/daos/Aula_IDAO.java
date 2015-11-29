@@ -3,7 +3,7 @@ package daos;
 import java.util.ArrayList;
 import javax.swing.table.TableModel;
 import org.hibernate.Session;
-import pojos.Aulas;
+import hibernate.Aulas;
 
 public interface Aula_IDAO {
     
@@ -20,6 +20,10 @@ public interface Aula_IDAO {
     public Aulas getAula(String edificio, int numero);
     
     public ArrayList<Aulas> getAulas();
+    
+    public ArrayList<String> nombresEdificios();
+    
+    public ArrayList<Integer> numerosAulas(String edificio);
     
     public TableModel tablaAulas(ArrayList<Aulas> aulas);
 }

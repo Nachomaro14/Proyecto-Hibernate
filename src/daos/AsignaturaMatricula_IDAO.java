@@ -3,7 +3,7 @@ package daos;
 import java.util.ArrayList;
 import javax.swing.table.TableModel;
 import org.hibernate.Session;
-import pojos.AsigMat;
+import hibernate.AsigMat;
 
 public interface AsignaturaMatricula_IDAO {
     
